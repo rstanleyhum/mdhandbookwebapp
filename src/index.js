@@ -1,8 +1,25 @@
+'use strict';
+
 import React from 'react';
 import ReactDOM from 'react-dom';
+
+import { Provider } from 'react-redux';
+
 import './index.css';
-import App from './App';
+
+import AppNav from './app/appnav';
+
 import registerServiceWorker from './registerServiceWorker';
 
-ReactDOM.render(<App />, document.getElementById('root'));
+import store from './app/store';
+
+
+
+ReactDOM.render(
+    <Provider store={ store }>
+        <AppNav />
+    </Provider>,
+    document.getElementById('root')
+);
+
 registerServiceWorker();
