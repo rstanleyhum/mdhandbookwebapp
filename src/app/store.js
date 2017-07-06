@@ -5,19 +5,12 @@ import { reactReduxFirebase, firebaseStateReducer } from 'react-redux-firebase';
 
 import { routerReducer, routerMiddleware } from 'react-router-redux';
 
-import createHistory from 'history/createBrowserHistory'
+import createHistory from 'history/createBrowserHistory';
+
+import { config } from './assets/firebase.secret';
 
 export const history = createHistory()
 
-
-const config = {
-    apiKey: "",
-    authDomain: "",
-    databaseURL: "",
-    projectId: "",
-    storageBucket: "",
-    messagingSenderId: ""
-};
 
 
 const createStoreWithFirebase = compose(
