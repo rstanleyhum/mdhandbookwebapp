@@ -1,8 +1,10 @@
 
 import React, { Component } from 'react';
+import { firebaseConnect } from 'react-redux-firebase';
 
 import logo from './images/logo.svg';
 import './css/main.css';
+
 
 class Main extends Component {
   render() {
@@ -21,4 +23,4 @@ class Main extends Component {
   }
 }
 
-export default Main;
+export default firebaseConnect()(Main);
