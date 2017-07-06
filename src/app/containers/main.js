@@ -1,14 +1,15 @@
 
-import React, { Component } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import { firebaseConnect } from 'react-redux-firebase';
 
 import logo from './images/logo.svg';
 import './css/main.css';
 
 
-class Main extends Component {
-  render() {
-    return (
+
+const Main = ({ onSignUp, onLogin }) => (
       <div className="App">
         <div className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
@@ -17,10 +18,26 @@ class Main extends Component {
         <p className="App-intro">
           To get started, edit <code>src/App.js</code> and save to reload.
         </p>
-        <button onClick={ () => { console.log("Hello"); }}>Middle button</button>
+        <button onClick={onSignUp}>Sign Up</button>
+        <button onClick={onLogin}>Login</button>
       </div>
     );
-  }
+
+
+Main.propTypes = {
+    onSignUp: PropTypes.func.isRequired,
+    onLogin: PropTypes.func.isRequired
 }
 
-export default firebaseConnect()(Main);
+
+const mapStateToProps = state => ({
+});
+
+
+const mapDispatchToProps = dispatch => ({
+    onSignUp: () => { console.log("Sign Up") },
+    onLogin: () => { console.log("Login") },
+});
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(firebaseConnect()(Main));
