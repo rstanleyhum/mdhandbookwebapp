@@ -16,15 +16,13 @@ const About = () => (
           The site is maintained by Dr. R. Stanley Hum.
         </p>
         <p>
-          <p>
             Contact:
-          </p>
-          <address>
+        </p>
+        <address>
             3959 Broadway, CHN 10-24<br />
             New York, NY, 10032<br />
             rsh2117@cumc.columbia.edu<br />
-          </address>
-        </p>
+        </address>
       </div>
     )}
   />

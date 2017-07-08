@@ -16,7 +16,7 @@ class HomeIconButton extends React.Component {
             <IconButton
                 containerElement={<Link to={HOME_ROUTE}/>}
                 tooltip={HOME_TITLE}
-                linkButton={true}>
+            >
                 <ActionHome />
             </IconButton>
         )

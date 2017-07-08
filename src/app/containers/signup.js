@@ -1,7 +1,5 @@
 import React from 'react';
 
-
-import RaisedButton from 'material-ui/RaisedButton';
 import WebStyles from '../config/webstyles';
 import BasePage from '../components/basepage';
 
@@ -22,7 +20,7 @@ const SignUp = () => (
           <SocialLoginButtons />
           <br />
           <p>If you already have an account...</p>
-          <p><RaisedLoginButton /></p>
+          <RaisedLoginButton />
       </div>
     )}
   />

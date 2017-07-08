@@ -8,15 +8,15 @@ class SocialLoginButtons extends React.Component {
         return (
           <div>
             <p>Sign In with Social Media Accounts</p>
-            <p><RaisedButton
+            <RaisedButton
                 label="Sign In With Google"
-            /></p>
-            <p><RaisedButton
+            /><br/><br/>
+            <RaisedButton
                 label="Sign In With Facebook"
-            /></p>
-            <p><RaisedButton
+            /><br/><br/>
+            <RaisedButton
                 label="Sign In With Twitter"
-            /></p>
+            /><br/><br/>
           </div>
         )
     }

@@ -15,7 +15,6 @@ class RaisedResetPasswordButton extends React.Component {
         return (
             <RaisedButton
                 containerElement={<Link to={RESET_PASSWORD_ROUTE}/>}
-                linkButton={true}
                 label={RESET_PASSWORD_TITLE}
             />
         )
@@ -28,7 +27,6 @@ export class FlatResetPasswordButton extends React.Component {
         return (
             <FlatButton
                 containerElement={<Link to={RESET_PASSWORD_ROUTE}/>}
-                linkButton={true}
                 label={RESET_PASSWORD_TITLE}
             />
         )

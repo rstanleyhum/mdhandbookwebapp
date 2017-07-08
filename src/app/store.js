@@ -12,7 +12,6 @@ import { config } from './assets/firebase.secret';
 export const history = createHistory()
 
 
-
 const createStoreWithFirebase = compose(
     reactReduxFirebase(config, { userProfile: 'users' }),
 )(createStore)

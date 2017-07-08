@@ -16,7 +16,6 @@ class RaisedSignUpButton extends React.Component {
         return (
             <RaisedButton
                 containerElement={<Link to={SIGNUP_ROUTE}/>}
-                linkButton={true}
                 label={SIGNUP_TITLE}
             />
         )
@@ -29,7 +28,6 @@ export class FlatSignUpButton extends React.Component {
         return (
             <FlatButton
                 containerElement={<Link to={SIGNUP_ROUTE}/>}
-                linkButton={true}
                 label={SIGNUP_TITLE}
             />
         )

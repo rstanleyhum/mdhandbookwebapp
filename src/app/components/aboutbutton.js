@@ -12,10 +12,10 @@ import {
 
 class RaisedAboutButton extends React.Component {
     render() {
+        console.log(this.props.history);
         return (
             <RaisedButton
                 containerElement={<Link to={ABOUT_ROUTE}/>}
-                linkButton={true}
                 label={ABOUT_TITLE}
             />
         )
@@ -28,7 +28,6 @@ export class FlatAboutButton extends React.Component {
         return (
             <FlatButton
                 containerElement={<Link to={ABOUT_ROUTE}/>}
-                linkButton={true}
                 label={ABOUT_TITLE}
             />
         )
