@@ -1,23 +1,34 @@
+import React from 'react';
 
-import React, { Component } from 'react';
+import BasePage from '../components/basepage';
 
-import logo from './images/logo.svg';
-import './css/main.css';
 
-class About extends Component {
-  render() {
-    return (
-      <div className="App">
-        <div className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h2>About</h2>
-        </div>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
+const About = () => (
+  <BasePage 
+    pageContent={(
+      <div>
+        <h2>About</h2>
+        <p>
+          The MD Handbook Web Site has been developed for MSCHONY residents and other healthcare professionals to support the educational app.
+          The site allows for customization of an educational mobile app.
+        </p>
+        <p>
+          The site is maintained by Dr. R. Stanley Hum.
+        </p>
+        <p>
+          <p>
+            Contact:
+          </p>
+          <address>
+            3959 Broadway, CHN 10-24<br />
+            New York, NY, 10032<br />
+            rsh2117@cumc.columbia.edu<br />
+          </address>
         </p>
       </div>
-    );
-  }
-}
+    )}
+  />
+);
+
 
 export default About;
