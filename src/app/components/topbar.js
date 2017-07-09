@@ -10,25 +10,28 @@ import {
 import HomeIconButton from './homeiconbutton';
 import { FlatLoginButton } from './loginbutton';
 import { FlatSignUpButton } from './signupbutton';
-import { FlatAboutButton } from './aboutbutton';
+import FlatAboutButton from './aboutbutton';
+import { FlatLogoutButton } from './logoutbutton';
+import FlatTopUserButton from './topuserbutton';
 
 
-class TopBar extends React.Component {
-    render() {
-        return (
+const TopBar = ({user}) => (
             <AppBar 
                 title={WEBSITE_TITLE}
                 iconElementLeft={<HomeIconButton />}
                 iconElementRight={
                 <div>
                     <FlatAboutButton />
-                    <FlatSignUpButton />
-                    <FlatLoginButton />
+                    {
+                        user ?
+                        <span><FlatTopUserButton /><FlatLogoutButton /></span>
+                        :
+                        <span><FlatSignUpButton /><FlatLoginButton /></span>
+                    }
                 </div>
                 }
             />
-        )
-    }
-}
+);
+
 
 export default TopBar;

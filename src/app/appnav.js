@@ -1,16 +1,19 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
-import { ConnectedRouter } from 'react-router-redux';
-import { Route } from 'react-router';
+import { BrowserRouter, Route, Redirect } from 'react-router-dom';
 
-import { history } from './store';
+import firebase from './services/firebase';
+
+import { setUser } from './actions/global';
+import store from './store';
+
 import Main from './containers/main';
 import About from './containers/about';
 import Login from './containers/login';
 import SignUp from './containers/signup';
 import ResetPassword from './containers/resetpassword.js';
 import ChangePassword from './containers/changepassword.js';
-
 
 import { 
     HOME_ROUTE,
@@ -22,19 +25,40 @@ import {
 } from './config/constants';
 
 
-export default class AppNav extends Component {
+class AppNav extends Component {
+
+    componentDidMount() {
+        firebase.auth().onAuthStateChanged(user =>{
+            store.dispatch(setUser(user));
+        });
+    }
+
     render() {
         return (
-            <ConnectedRouter history={history}>
+            <BrowserRouter>
                 <div>
                     <Route exact path={HOME_ROUTE} component={Main}/>
-                    <Route path={ABOUT_ROUTE} component={About}/>
-                    <Route path={LOGIN_ROUTE} component={Login} />
+                    <Route path={ABOUT_ROUTE} render={() => (
+                        this.props.user ?
+                            <About user={this.props.user} /> :
+                            <Redirect to={LOGIN_ROUTE}/>
+                    )}/>
+                    <Route path={LOGIN_ROUTE} component={Login} user={this.props.user} />
                     <Route path={SIGNUP_ROUTE} component={SignUp} />
                     <Route path={RESET_PASSWORD_ROUTE} component={ResetPassword} />
                     <Route path={CHANGE_PASSWORD_ROUTE} component={ChangePassword} />
                 </div>
-            </ConnectedRouter>
+            </BrowserRouter>
         )
     }    
 };
+
+const mapStateToProps = state => ({
+    user: state.global.user
+});
+
+const mapDispatchToProps = dispatch => ({
+});
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(AppNav);

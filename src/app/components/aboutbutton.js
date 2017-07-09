@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
 import FlatButton from 'material-ui/FlatButton';
@@ -10,9 +11,9 @@ import {
 } from '../config/constants';
 
 
-class RaisedAboutButton extends React.Component {
+export class RaisedAboutButton extends React.Component {
     render() {
-        console.log(this.props.history);
+        console.log(this.props);
         return (
             <RaisedButton
                 containerElement={<Link to={ABOUT_ROUTE}/>}
@@ -23,8 +24,9 @@ class RaisedAboutButton extends React.Component {
 }
 
 
-export class FlatAboutButton extends React.Component {
+class FlatAboutButton extends React.Component {
     render() {
+        console.log(this.props.user);
         return (
             <FlatButton
                 containerElement={<Link to={ABOUT_ROUTE}/>}
@@ -34,5 +36,8 @@ export class FlatAboutButton extends React.Component {
     }
 }
 
+FlatAboutButton.propTypes = {
+    user: PropTypes.object
+};
 
-export default RaisedAboutButton
+export default FlatAboutButton

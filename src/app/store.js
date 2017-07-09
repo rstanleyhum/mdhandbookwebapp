@@ -1,38 +1,24 @@
 
-import { applyMiddleware, combineReducers, createStore, compose } from 'redux';
+import { applyMiddleware, combineReducers, createStore } from 'redux';
 import thunk from 'redux-thunk';
-import { reactReduxFirebase, firebaseStateReducer } from 'react-redux-firebase';
 
-import { routerReducer, routerMiddleware } from 'react-router-redux';
-
-import createHistory from 'history/createBrowserHistory';
-
-import { config } from './assets/firebase.secret';
-
-export const history = createHistory()
-
-
-const createStoreWithFirebase = compose(
-    reactReduxFirebase(config, { userProfile: 'users' }),
-)(createStore)
-
+import GlobalReducer from './reducers/globalreducer';
 
 const middleware = () => {
     return applyMiddleware(
         thunk,
-        routerMiddleware(history),
     )
 };
 
 const rootReducer = combineReducers({
-    router: routerReducer,
-    firebase: firebaseStateReducer,
+    global: GlobalReducer,
 });
 
 
-const store = createStoreWithFirebase(
+const store = createStore(
     rootReducer,
-    middleware(),
+    middleware()
 );
+
 
 export default store;

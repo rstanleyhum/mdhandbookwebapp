@@ -1,9 +1,10 @@
-
 import React from 'react';
 
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import Paper from 'material-ui/Paper';
+
+import firebase from '../services/firebase';
 
 const style = {
     height: 300,
@@ -41,6 +42,16 @@ class SignUp extends React.Component {
         });
     };
 
+    handleClick = () => {
+        firebase.auth().createUserWithEmailAndPassword(
+            this.state.email, this.state.password1)
+        .catch(error => {
+            console.log("Error creating User");
+            console.log(error.code);
+            console.log(error.message);
+        });
+    }
+
     render() {
         return (
             <div>
@@ -69,7 +80,9 @@ class SignUp extends React.Component {
                         </div>
                         <br />
                         <div>
-                            <RaisedButton label="Sign Up" />
+                            <RaisedButton
+                                onClick={this.handleClick} 
+                                label="Sign Up" />
                         </div>
                     </form>
                 </Paper>

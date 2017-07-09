@@ -24,6 +24,7 @@ class RaisedSignUpButton extends React.Component {
 
 
 export class FlatSignUpButton extends React.Component {
+    
     render() {
         return (
             <FlatButton

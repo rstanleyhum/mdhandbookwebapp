@@ -1,5 +1,5 @@
-
 import React from 'react';
+
 
 import WebStyles from '../config/webstyles';
 import BasePage from '../components/basepage';
@@ -12,7 +12,7 @@ import RaisedResetPasswordButton from '../components/resetpasswordbutton';
 
 
 
-const Login = () => (
+const Login = ({auth}) => (
   <BasePage 
     pageContent={(
       <div style={WebStyles.subContainerCenter}>

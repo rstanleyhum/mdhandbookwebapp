@@ -3,10 +3,11 @@ import React from 'react';
 import BasePage from '../components/basepage';
 
 
-const About = () => (
-  <BasePage 
+const About = ({user}) => (
+  <BasePage user={user}
     pageContent={(
       <div>
+        <h1>{user.email}</h1>
         <h2>About</h2>
         <p>
           The MD Handbook Web Site has been developed for MSCHONY residents and other healthcare professionals to support the educational app.
