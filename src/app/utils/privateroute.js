@@ -1,11 +1,13 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
+
+import { LOGIN_ROUTE } from '../config/constants';
 
 
 const PrivateRoute = ({ component: Component, user, ...rest}) => (
     <Route {...rest} render={ props => (
         user ?
-            <Component user={user} {...props}/> :
+            <Component {...props}/> :
             <Redirect to={LOGIN_ROUTE}/>
     )}/>
 );
