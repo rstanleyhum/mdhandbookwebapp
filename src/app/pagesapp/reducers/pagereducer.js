@@ -1,5 +1,5 @@
 
-import Pages from '../config/assets';
+import { Pages } from '../config/assets';
 import { PUSH_PAGE, POP_PAGE, PUSH_WEB_PAGE } from '../actions/page';
 
 const initialState = {
