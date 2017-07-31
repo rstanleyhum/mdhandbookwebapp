@@ -7,7 +7,7 @@ class WebFrame extends React.Component {
         content: PropTypes.string.isRequired,
         width: PropTypes.string.isRequired,
         height: PropTypes.string.isRequired,
-    //    stylesheets: PropTypes.arrayOf(PropTypes.string),
+        stylesheet: PropTypes.string,
     };
 
     componentDidMount() {
@@ -21,16 +21,19 @@ class WebFrame extends React.Component {
     _updateIframe() {
         const iframe = this.refs.iframe;
         const document = iframe.contentDocument;
-        //const head = document.getElementsByTagName('head')[0];
         document.body.innerHTML = this.props.content;
 
-        // this.props.stylesheets.forEach(url => {
-        //     const ref = document.createElement('link');
-        //     ref.rel = 'stylesheet';
-        //     ref.type = 'text/css';
-        //     ref.href = url;
-        //     head.appendChild(ref);
-        // });
+        if(this.props.stylesheet) {
+            const head = document.getElementsByTagName('head')[0];
+            var ref = document.createElement('style');
+            ref.type = 'text/css';
+            if (ref.styleSheet) {
+                ref.styleSheet.cssText = this.props.stylesheet;
+            } else {
+                ref.appendChild(document.createTextNode(this.props.stylesheet));
+            }
+            head.appendChild(ref);
+        }
     }
 
     render() {
