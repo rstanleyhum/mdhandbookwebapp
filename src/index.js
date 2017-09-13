@@ -1,8 +1,30 @@
+
 import React from 'react';
 import ReactDOM from 'react-dom';
+
+import { Provider } from 'react-redux';
+
 import './index.css';
-import App from './App';
+
+import AppNav from './app/appnav';
+
 import registerServiceWorker from './registerServiceWorker';
 
-ReactDOM.render(<App />, document.getElementById('root'));
+import store from './app/store';
+
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+
+import injectTapEventPlugin from 'react-tap-event-plugin';
+injectTapEventPlugin();
+
+
+ReactDOM.render(
+    <Provider store={ store }>
+        <MuiThemeProvider>
+            <AppNav />
+        </MuiThemeProvider>
+    </Provider>,
+    document.getElementById('root')
+);
+
 registerServiceWorker();
