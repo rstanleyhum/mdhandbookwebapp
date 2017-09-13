@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Spinner from 'react-spinner';
-import { BrowserRouter, Route } from 'react-router-dom';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { Helmet } from 'react-helmet';
 
 import firebase from './services/firebase';
 
@@ -33,6 +34,9 @@ import {
     BOOKPAGE_ROUTE
 } from './config/constants';
 
+const NotFound = () => (
+    <h2>404... This page was not found.</h2>
+)
 
 class AppNav extends Component {
     constructor(props) {
@@ -62,13 +66,11 @@ class AppNav extends Component {
                     <div>{ user === undefined ?  
                         <Spinner /> : 
                         (<div style={WebStyles.mainContainer}>
+                            <Switch>
                             <Route exact path={HOME_ROUTE} component={Main}/>                  
-                            <Route path={ABOUT_ROUTE} component={About} />
-                            <LoggedOutRoute path={LOGIN_ROUTE} user={user} component={Login} redirect={BOOKPAGE_ROUTE} />
-                            <LoggedOutRoute path={SIGNUP_ROUTE} user={user} component={SignUp} redirect={BOOKPAGE_ROUTE} />
-                            <LoggedOutRoute path={RESET_PASSWORD_ROUTE} user={user} component={ResetPassword} redirect={BOOKPAGE_ROUTE} />
-                            <PrivateRoute path={CHANGE_PASSWORD_ROUTE} user={user} component={ChangePassword} />
-                            <PrivateRoute path={BOOKPAGE_ROUTE} user={user} component={BookPage} />
+                            <Route exact path={ABOUT_ROUTE} component={About} />
+                            <Route path='*' component={NotFound} />
+                            </Switch>
                         </div>)
                     }</div>
                 </div>

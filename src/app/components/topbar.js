@@ -16,24 +16,6 @@ import FlatTopUserButton from './topuserbutton';
 import { FlatChangePasswordButton } from './changepasswordbutton';
 
 
-// const TopBar = ({user}) => (
-//     user ?
-//         <AppBar 
-//             title={WEBSITE_TITLE}
-//             iconElementLeft={<HomeIconButton />}
-//             iconElementRight={
-//             <div>
-//                 <FlatAboutButton />
-//                     <span><FlatTopUserButton /><FlatLogoutButton /></span>
-//                     <span><FlatSignUpButton /><FlatLoginButton /></span>
-//             </div>
-//             }
-//         /> :
-//         <AppBar 
-//             title={WEBSITE_TITLE}
-//         />
-// );
-
 const TopBar = ({user}) => (
     user === undefined ?
         <AppBar title={WEBSITE_TITLE} /> :
@@ -45,8 +27,6 @@ const TopBar = ({user}) => (
                     iconElementRight={
                         <div>
                           <FlatAboutButton />
-                          <FlatSignUpButton />
-                          <FlatLoginButton />
                         </div>
                     }
                 />
@@ -58,9 +38,6 @@ const TopBar = ({user}) => (
                     iconElementRight={
                         <div>
                           <FlatAboutButton />
-                          <FlatTopUserButton user={user} />
-                          <FlatChangePasswordButton />
-                          <FlatLogoutButton />
                         </div>    
                     }
                 />
