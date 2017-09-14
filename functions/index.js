@@ -9,27 +9,27 @@ const indexFilename = "indexfile.json";
 // // https://firebase.google.com/docs/functions/write-firebase-functions
 //
 
-exports.updateindex = functions.storage.object().onChange(event => {
-  const object = event.data;
-  const filePath = object.name;
+// exports.updateindex = functions.storage.object().onChange(event => {
+//   const object = event.data;
+//   const filePath = object.name;
 
-  if (filePath == indexFilename) {
-    return;
-  }
+//   if (filePath == indexFilename) {
+//     return;
+//   }
   
-  const bucket = gcs.bucket(storageBucketName);
-  var indexfile = bucket.file(indexFilename);
+//   const bucket = gcs.bucket(storageBucketName);
+//   var indexfile = bucket.file(indexFilename);
   
-  _updateIndex(bucket, indexfile)
-    .then( () => {
-      return;
-    })
-    .catch(err => {
-      console.log(err);
-    });
+//   _updateIndex(bucket, indexfile)
+//     .then( () => {
+//       return;
+//     })
+//     .catch(err => {
+//       console.log(err);
+//     });
 
-  return;
-});
+//   return;
+// });
 
 
 const _updateIndex = (bucket, indexfile) => {
