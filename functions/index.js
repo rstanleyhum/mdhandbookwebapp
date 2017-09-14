@@ -12,45 +12,82 @@ const indexFilename = "indexfile.json";
 exports.updateindex = functions.storage.object().onChange(event => {
   const object = event.data;
   const filePath = object.name;
-  console.log(filePath);
+
   if (filePath == indexFilename) {
-    console.log("Do nothing");
     return;
   }
-  console.log("Perform the indexing");
-  return;
   
-  const baseFileName = path.basename(filePath, path.extname(filePath));
+  const bucket = gcs.bucket(storageBucketName);
+  var indexfile = bucket.file(indexFilename);
+  
+  _updateIndex(bucket, indexfile)
+    .then( () => {
+      return;
+    })
+    .catch(err => {
+      console.log(err);
+    });
+
+  return;
 });
 
+
+const _updateIndex = (bucket, indexfile) => {
+  var p = new Promise( (resolve, reject) => {
+    _getFilesFromBucket(bucket)
+      .then(data => {
+        var files = data[0];
+        return _getMetadata(files);
+      })
+      .then(metadata => {
+        return _parseMetadata(metadata);
+      })
+      .then(json => {
+        return _saveToIndexFile(indexfile, json);
+      })
+      .then( () => {
+        resolve();
+      })
+      .catch( err => {
+        reject(err);
+      });
+  });
+  return p;
+}
+
+const _getFilesFromBucket = (bucket) => {
+  return bucket.getFiles();
+};
+
+const _getMetadata = (files) => {
+  var getallmetadata = files.map(item => {
+    return item.getMetadata()
+  });
+  return Promise.all(getallmetadata);
+};
+
+const _parseMetadata = (metadata) => {
+  return metadata.map(meta => {
+    var item = {};
+    item.name = meta[0].name;
+    item.updated = Date.parse(meta[0].updated);
+    return item;
+  });
+};
+
+const _saveToIndexFile = (indexfile, json) => {
+  return indexfile.save(JSON.stringify(json, null, 2));
+}
 
 exports.httpsupdateindex = functions.https.onRequest((request, response) => {
   const bucket = gcs.bucket(storageBucketName);
   var indexfile = bucket.file(indexFilename);
-  bucket.getFiles()
-    .then(data =>{
-      files = data[0];
-      var getallmetadata = files.map(item => {
-        return item.getMetadata()
-      });
-      return Promise.all(getallmetadata);
-    })
-    .then(data2 => {
-      return data2.map( meta => {
-        var item = {}
-        item.name = meta[0].name
-        item.updated = Date.parse(meta[0].updated);
-        return item;
-      });
-    })
-    .then(json => {
-      return indexfile.save(JSON.stringify(json, null, 2));
-    })
+  _updateIndex(bucket, indexfile)
     .then( () => {
-      response.send();
+      response.end();
     })
     .catch(err => {
-      console.log(err);
+      response.status(500).json({"error": err});
     })
 });
 
@@ -58,14 +95,19 @@ exports.httpsupdateindex = functions.https.onRequest((request, response) => {
 exports.checkfiles = functions.https.onRequest((request, response) => {
   const bucket = gcs.bucket(storageBucketName);
   var indexfile = bucket.file(indexFilename);
-  var checkDate = new Date(2017, 8, 10, 9, 22);
+  
+  var checkDate = _getCheckDate(request.query.time);
+
   indexfile.get()
     .then(data => {
       var file = data[0];
       var fileUpdated = new Date(file.metadata.updated)
+      
       if (fileUpdated < checkDate) {
-        response.send("Nothing to do.");
-        throw true
+        var returnData = [];
+        var content = [];
+        returnData[0] = JSON.stringify(content);
+        return Promise.resolve(returnData);
       }
       return file.download();
     })
@@ -73,12 +115,21 @@ exports.checkfiles = functions.https.onRequest((request, response) => {
       var contents = data[0];
       var filedata = JSON.parse(contents);
       var json = _getJSON(filedata, checkDate.getTime());
-      response.send(JSON.stringify(json, null, 2));
+      response.json(json);
     })
     .catch( err => {
-      console.log(err);
-    })
+      response.status(500).json({"error": err});
+    });
 });
+
+
+const _getCheckDate = (timestring) => {
+  var checkTime = parseInt(timestring);
+  if (!checkTime) {
+    checkTime = Date.now();
+  }
+  return new Date(checkTime);
+}
 
 
 const _getJSON = (filedata, check) => {
@@ -95,19 +146,21 @@ const _getJSON = (filedata, check) => {
 };
 
 
-exports.checkallfiles = functions.https.onRequest((request, response) => {
+exports.forcecheckfiles = functions.https.onRequest((request, response) => {
   const bucket = gcs.bucket(storageBucketName);
   var indexfile = bucket.file(indexFilename);
-  var checkDate = new Date(2017, 6, 10, 9, 22);
+  
+  var checkDate = _getCheckDate(request.query.time)
+  
   indexfile.download()
     .then(data => {
       var contents = data[0]
       var filedata = JSON.parse(contents);
       var json = _getJSON(filedata, checkDate.getTime());
-      response.send(JSON.stringify(json, null, 2));
+      response.json(json);
     })
     .catch(err => {
-      console.log(err);
+      response.status(500).json({"error": err});
     })
 });
 
